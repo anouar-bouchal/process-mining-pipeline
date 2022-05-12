@@ -1,0 +1,19 @@
+version: "3"
+services:
+  zookeper:
+    image: kafka-zookeeper
+    container_name: kafka-zookeeper
+    ports:
+      - 2181:2181
+  kafka:
+    image: kafka-server
+    container_name: kafka-server
+    ports:
+      - 9092:9092
+    # volumes:
+      # - ./kafka-server/logs:/tmp/kafka-logs
+networks: 
+  default: 
+    external: 
+      name: data-net
+

@@ -1,0 +1,7 @@
+FROM spark-base
+
+ENV SPARK_WORKER_WEBUI_PORT 4041
+
+EXPOSE 4041
+
+ENTRYPOINT ./sbin/start-slave.sh ${SPARK_MASTER_URI}

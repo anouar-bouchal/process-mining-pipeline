@@ -1,0 +1,39 @@
+version: "3"
+services:
+    spark-master:
+        image: spark-master
+        container_name: spark-master
+        ports:
+            - 4040:4040
+            - 4041:4041
+            - 4042:4043
+            - 7077:7077
+        volumes:
+            - ./spark-apps:/opt/spark-apps
+            - ./logs:/usr/bin/spark/logs
+        environment:
+            - SPARK_MASTER_HOST=spark-master
+            - KAFKA_SERVER_URL=kafka-server:9092
+
+    spark-worker:
+        image: spark-worker
+        depends_on:
+            - spark-master
+        ports:
+            - 8081-8091:8081
+            - 4041-5050:4041
+        volumes:
+            - ./spark-apps:/opt/spark-apps
+            - ./logs:/usr/bin/spark/logs
+        environment:
+            - SPARK_MASTER_URI=spark://spark-master:7077
+            - SPARK_WORKER_CORES=1
+            - SPARK_WORKER_MEMORY=1G
+            - SPARK_DRIVER_MEMORY=128m
+            - SPARK_EXECUTOR_MEMORY=256m
+            - KAFKA_SERVER_URL=kafka-server:9092
+
+networks: 
+  default: 
+    external: 
+      name: data-net
