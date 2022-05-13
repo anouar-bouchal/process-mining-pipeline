@@ -46,8 +46,8 @@ RUN chmod +x /usr/local/bin/startup.sh
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-EXPOSE 10000
-EXPOSE 10002
+EXPOSE 10180
+EXPOSE 10182
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD startup.sh

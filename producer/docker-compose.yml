@@ -1,0 +1,13 @@
+version: "3"
+services:
+  data-producer:
+    image: data-producer
+    
+    volumes:
+      - ./src:/code
+  
+networks: 
+  default: 
+    external: 
+      name: data-net
+

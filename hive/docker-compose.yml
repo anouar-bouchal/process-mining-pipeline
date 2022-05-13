@@ -32,7 +32,7 @@ services:
       HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/metastore"
       SERVICE_PRECONDITION: "hive-metastore:9083"
     ports:
-      - "10000:10000"
+      - "10180:10181"
   hive-metastore:
     container_name: hive-metastore
     image: bde2020/hive:2.3.2-postgresql-metastore

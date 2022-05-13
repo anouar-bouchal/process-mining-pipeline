@@ -1,0 +1,62 @@
+{
+  "name": "leaflet.heat",
+  "version": "0.2.0",
+  "description": "A tiny and fast Leaflet heatmap plugin.",
+  "homepage": "https://github.com/Leaflet/Leaflet.heat",
+  "keywords": [
+    "heatmap",
+    "canvas",
+    "visualization",
+    "gis",
+    "leaflet",
+    "plugin"
+  ],
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Leaflet/Leaflet.heat.git"
+  },
+  "main": "dist/leaflet-heat.js",
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-mourner": "^1.0.1",
+    "simpleheat": "~0.2.0",
+    "uglify-js": "^2.5.0"
+  },
+  "eslintConfig": {
+    "extends": "mourner",
+    "globals": {
+      "L": false,
+      "simpleheat": false
+    }
+  },
+  "scripts": {
+    "test": "eslint src",
+    "start": "nodemon server.js"
+  },
+  "license": "BSD-2-Clause",
+  "jshintConfig": {
+    "quotmark": "single",
+    "globals": {
+      "L": true,
+      "simpleheat": true
+    },
+    "trailing": true,
+    "camelcase": true,
+    "curly": true,
+    "eqeqeq": true,
+    "noempty": true,
+    "nonbsp": true,
+    "undef": true,
+    "unused": true,
+    "browser": true
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-ws": "^4.0.0",
+    "jquery-csv": "^1.0.11",
+    "kafka-node": "^5.0.0",
+    "kafkajs": "^1.15.0",
+    "ws": "^7.4.3"
+  }
+}

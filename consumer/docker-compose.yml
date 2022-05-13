@@ -1,0 +1,15 @@
+version: "3"
+services:
+  heat-map:
+    image: heat-map-consumer
+    container_name: heat-map-consumer
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/usr/src/app
+  
+networks: 
+  default: 
+    external: 
+      name: data-net
+

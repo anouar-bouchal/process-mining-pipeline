@@ -19,6 +19,6 @@ echo '\n==========================================================='
 
 docker build -t kafka-base ./kafka/kafka-base/
 echo '\n# Building kafka-server'
-docker build -t kafak-server ./kafka/kafka-server/
+docker build -t kafka-server ./kafka/kafka-server/
 echo '\n# Building kafka-zookeeper'
 docker build -t kafka-zookeeper ./kafka/kafka-zookeeper/
