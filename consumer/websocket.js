@@ -15,19 +15,22 @@ client = new kafka.KafkaClient(
         kafkaHost: 'kafka-server:9092',
     }
 ),
-    consumer = new Consumer(
-        client,
-        [
-            { topic: 'covid-new-cases' }
-        ],
-        {
-            autoCommit: false
-        }
-    );
+
+consumer = new Consumer(
+    client,
+    [
+        { topic: 'covid-new-cases' }
+    ],
+    {
+        autoCommit: false
+    }
+);
+
 consumer.on('message', function (message) {
     if (wSocket != undefined)
         wSocket.send(message.value)
 });
+
 consumer.on('error', function (err) {
     console.log('error ==> ', err);
 });
