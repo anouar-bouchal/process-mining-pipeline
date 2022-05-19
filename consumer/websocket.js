@@ -6,7 +6,7 @@ const kafka = require('kafka-node'),
     Consumer = kafka.Consumer;
 let wSocket
 
-router.ws('/covid-new-cases', (ws, req) => {
+router.ws('/event-log-stream', (ws, req) => {
     wSocket = ws;
 })
 
@@ -19,7 +19,7 @@ client = new kafka.KafkaClient(
 consumer = new Consumer(
     client,
     [
-        { topic: 'covid-new-cases' }
+        { topic: 'event-logs-stream' }
     ],
     {
         autoCommit: false

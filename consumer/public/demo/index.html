@@ -35,24 +35,10 @@
 
 <body>
 
-  <div id="map"></div>
+  <h1 id="">logs in console</h1>
 
-  <script src="../dist/leaflet-heat.js"></script>
-
-  <script src="./samples.js"></script>
   <script>
-
-    var map = L.map('map').setView([33.982051, -6.863709], 16);
-
-    var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
-
-    addressPoints = [];
-
-    var heat = L.heatLayer(addressPoints).addTo(map);
-
-    const ws = new WebSocket('ws://localhost:5000/websocket/covid-new-cases')
+    const ws = new WebSocket('ws://localhost:5000/websocket/event-logs-stream')
     ws.onopen = e => {
       console.log(`WebSocket State ${ws.readyState}`)
     }
@@ -61,11 +47,6 @@
       let dt = data.data.split(";");
 
       console.log(dt);
-
-      let lat = dt[1];
-      let lng = dt[2];
-
-      heat.addLatLng([lat, lng])
     }
 
     ws.onclose = data => {

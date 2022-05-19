@@ -12,7 +12,7 @@ def handle_rdd(rdd):
         df = None
         try:
             df = spark_session.createDataFrame(
-                rdd, schema=["id", "lat", "lng", "aff_date"]
+                rdd, schema=["index", "case_id", "task", "event_type", "user", "timestamp"]
             )
         except Exception as e:
             raise e
