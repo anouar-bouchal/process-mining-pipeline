@@ -9,12 +9,12 @@ import datetime
 dir = os.path.dirname(os.path.realpath(__file__))
 
 BROKER = "kafka-server:9092"
-TOPIC = "covid-new-cases"
+TOPIC = "event-logs-stream"
 
 POSITIONS_FILE = dir + "/data.csv"
 
 try:
-    p = KafkaProducer(bootstrap_servers=BROKER)
+    producer = KafkaProducer(bootstrap_servers=BROKER)
 except Exception as e:
     print(f"ERROR --> {e}")
     sys.exit(1)
@@ -36,5 +36,5 @@ while True:
     frame = ";".join(frame_list)
 
     print(f">>> '{frame}'")
-    p.send(TOPIC, bytes(frame, encoding="utf8"))
+    producer.send(TOPIC, bytes(frame, encoding="utf8"))
     sleep(random.randint(1, 2))

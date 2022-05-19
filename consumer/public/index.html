@@ -52,7 +52,7 @@
 
     var heat = L.heatLayer(addressPoints).addTo(map);
 
-    const ws = new WebSocket('ws://localhost:5000/websocket/covid-new-cases')
+    const ws = new WebSocket('ws://localhost:5000/websocket/event-logs-stream')
     ws.onopen = e => {
       console.log(`WebSocket State ${ws.readyState}`)
     }
