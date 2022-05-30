@@ -1,8 +1,8 @@
 version: "3"
 services:
   heat-map:
-    image: heat-map-consumer
-    container_name: heat-map-consumer
+    image: consumer
+    container_name: consumer
     ports:
       - "5000:5000"
     volumes:

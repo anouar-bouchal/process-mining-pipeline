@@ -11,7 +11,7 @@ dir = os.path.dirname(os.path.realpath(__file__))
 BROKER = "kafka-server:9092"
 TOPIC = "event-logs-stream"
 
-POSITIONS_FILE = dir + "/data.csv"
+POSITIONS_FILE = dir + "/logs.csv"
 
 try:
     producer = KafkaProducer(bootstrap_servers=BROKER)

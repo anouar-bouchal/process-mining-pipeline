@@ -6,7 +6,7 @@ const kafka = require('kafka-node'),
     Consumer = kafka.Consumer;
 let wSocket
 
-router.ws('/event-log-stream', (ws, req) => {
+router.ws('/event-logs-stream', (ws, req) => {
     wSocket = ws;
 })
 

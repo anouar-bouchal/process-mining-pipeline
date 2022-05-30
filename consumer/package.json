@@ -1,26 +1,7 @@
 {
-  "name": "leaflet.heat",
-  "version": "0.2.0",
-  "description": "A tiny and fast Leaflet heatmap plugin.",
-  "homepage": "https://github.com/Leaflet/Leaflet.heat",
-  "keywords": [
-    "heatmap",
-    "canvas",
-    "visualization",
-    "gis",
-    "leaflet",
-    "plugin"
-  ],
-  "author": "",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/Leaflet/Leaflet.heat.git"
-  },
-  "main": "dist/leaflet-heat.js",
   "devDependencies": {
     "eslint": "^8.15.0",
     "eslint-config-mourner": "^1.0.1",
-    "simpleheat": "~0.2.0",
     "uglify-js": "^2.5.0"
   },
   "eslintConfig": {
