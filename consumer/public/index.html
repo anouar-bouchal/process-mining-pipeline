@@ -3,35 +3,19 @@
 
 <head>
   <title>Event logs Consumed Here</title>
-  <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-    crossorigin="" />
-  </style>
 </head>
 
 <body>
-
   <div id="log"></div>
 
-  <script src="../dist/leaflet-heat.js"></script>
-
-  <script src="./samples.js"></script>
   <script>
     const ws = new WebSocket('ws://localhost:5000/websocket/event-logs-stream')
     ws.onopen = e => {
-      console.log(`WebSocket State ${ws.readyState}`)
+      console.log('WebSocket State' + ws.readyState)
     }
 
     ws.onmessage = data => {
-      let dt = data.data.split(";");
-
-      console.log(dt);
-
-      let lat = dt[1];
-      let lng = dt[2];
-
-      heat.addLatLng([lat, lng])
+      console.log(data.data);
     }
 
     ws.onclose = data => {
