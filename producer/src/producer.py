@@ -20,10 +20,8 @@ except Exception as e:
     sys.exit(1)
 
 while True:
-
-
-    with open(EVENT_LOGS) as fin:
-        random_line = min(fin, key=lambda L: random.random()).replace("\n", "")
+    with open(EVENT_LOGS) as file:
+        random_line = min(file, key=lambda L: random.random()).replace("\n", "")
     event = random_line.replace(",", ";")
 
     print(f">>> '{event}'")

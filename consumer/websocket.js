@@ -6,15 +6,11 @@ const kafka = require('kafka-node'),
     Consumer = kafka.Consumer;
 let wSocket
 
-router.ws('/event-logs-stream', (ws, req) => {
-    wSocket = ws;
-})
-
 client = new kafka.KafkaClient(
     {
         kafkaHost: 'kafka-server:9092',
     }
-),
+);
 
 consumer = new Consumer(
     client,
@@ -34,5 +30,10 @@ consumer.on('message', function (message) {
 consumer.on('error', function (err) {
     console.log('error ==> ', err);
 });
+
+router.ws('/event-logs-stream', (ws, req) => {
+    console.log("event-logs-stream-route");
+    wSocket = ws;
+})
 
 module.exports = router
