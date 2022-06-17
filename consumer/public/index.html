@@ -9,18 +9,26 @@
   <div id="log"></div>
 
   <script>
-    const ws = new WebSocket('ws://localhost:5000/websocket/event-logs-stream')
+    const ws = new WebSocket('ws://localhost:5000/consume/event-logs-stream')
     ws.onopen = e => {
       console.log('WebSocket State : ' + ws.readyState)
     }
 
-    ws.onmessage = data => {
-      console.log("Message recieved");
-      console.log(data.data);
+    ws.onmessage = message => {
+      console.log(arrayBufferToString(JSON.parse(message['data']).value.data));
     }
 
-    ws.onclose = data => {
-      console.log('Closed', data);
+    ws.onclose = message => {
+      console.log('Closed', message);
+    }
+
+    function arrayBufferToString(buffer){
+      var arr = new Uint8Array(buffer);
+      var str = String.fromCharCode.apply(String, arr);
+      if(/[\u0080-\uffff]/.test(str)){
+        throw new Error("this string seems to contain (still encoded) multibytes");
+      }
+      return str;
     }
   </script>
 </body>

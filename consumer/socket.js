@@ -1,6 +1,16 @@
+const express = require('express');
+const expressWs = require('express-ws')
+const router = express.Router()
+expressWs(router);
+let wSocket
+
+router.ws('/event-logs-stream', (ws, req) => {
+    console.log("event-logs-stream-route");
+    wSocket = ws;
+})
+
 // import the `Kafka` instance from the kafkajs library
 const { Kafka } = require("kafkajs")
-
 // the client ID lets kafka know who's producing the messages
 const clientId = "event-logs"
 // we can define the list of brokers in the cluster
@@ -22,6 +32,8 @@ const consume = async () => {
 		eachMessage: ({ message }) => {
 			// here, we just log the message to the standard output
 			console.log(`received message: ${message.value}`)
+			if (wSocket != undefined)
+        		wSocket.send(JSON.stringify(message))
 		},
 	})
 }
@@ -29,3 +41,6 @@ const consume = async () => {
 consume().catch((err) => {
     console.error("Something went wrong with our consumer");
 })
+
+
+module.exports = router
