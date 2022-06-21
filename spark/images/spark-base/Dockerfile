@@ -1,21 +1,23 @@
 FROM openjdk:8-jre
 
-ARG SPARK_VERSION
-ARG HADOOP_VERSION
+ARG SPARK_VERSION=2.4.7
+ARG HADOOP_VERSION=2.7
 
-RUN apt-get update -qy
-RUN apt-get install -y procps python3 python3-pip
-RUN mkdir /usr/bin/spark/
-RUN curl https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz -o spark.tgz
-RUN tar -xf spark.tgz
-RUN mv spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}/* /usr/bin/spark/
-RUN rm -rf spark.tgz
-RUN rm -rf spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}/
+RUN apt-get update -qy && \
+    apt-get install -y procps && \
+    apt-get install -y build-essential checkinstall && \
+    apt-get install -y libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev && \
+    wget https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tgz && \
+    tar xzf Python-3.5.2.tgz && \
+    cd Python-3.5.2 && \
+    ./configure && \
+    make altinstall && \
+    rm -rf Python-3.5.2.tgz
 
-ENV SPARK_HOME /usr/bin/spark
-ENV SPARK_NO_DAEMONIZE true
-ENV PYSPARK_DRIVER_PYTHON python3
-ENV PYSPARK_PYTHON python3
-ENV PATH /usr/bin/spark/bin:/usr/bin/spark/sbin:$PATH
+RUN mv /usr/local/bin/python3.5 /usr/local/bin/python3
 
-WORKDIR ${SPARK_HOME}
+RUN mkdir /usr/bin/spark/ && \
+    curl https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz -o spark.tgz && \
+    tar -xf spark.tgz && \
+    mv spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}/* /usr/bin/spark/ && \
+    rm -rf spark.tgz && \
