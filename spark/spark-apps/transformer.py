@@ -25,12 +25,12 @@ def handle_rdd(rdd):
         print("########################################################")
 
 
-spark_context = SparkContext(appName="Something")
+spark_context = SparkContext(appName="discovery")
 
 spark_streaming_context = StreamingContext(spark_context, 5)
 
 spark_session = (
-    SparkSession.builder.appName("covid streaming")
+    SparkSession.builder.appName("event logs")
     .config("spark.sql.warehouse.dir", "/user/hive/warehouse")
     .config("hive.metastore.uris", "thrift://hive-metastore:9083")
     .enableHiveSupport()
@@ -40,7 +40,7 @@ spark_session = (
 
 kafka_stream = KafkaUtils.createDirectStream(
     spark_streaming_context,
-    ["covid-new-cases"],
+    ["event-logs-stream"],
     {"metadata.broker.list": "kafka-server:9092"},
 )
 
