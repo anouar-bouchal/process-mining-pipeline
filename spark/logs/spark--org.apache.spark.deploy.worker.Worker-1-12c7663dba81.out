@@ -1,0 +1,7 @@
+Spark Command: /usr/local/openjdk-8/bin/java -cp /usr/bin/spark/conf/:/usr/bin/spark/jars/* -Xmx1g org.apache.spark.deploy.worker.Worker --webui-port 4041 spark://spark-master:7077
+========================================
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+22/08/09 23:57:07 INFO Worker: Started daemon with process name: 17@12c7663dba81
+22/08/09 23:57:07 INFO SignalUtils: Registered signal handler for TERM
+22/08/09 23:57:07 INFO SignalUtils: Registered signal handler for HUP
+22/08/09 23:57:07 INFO SignalUtils: Registered signal handler for INT
