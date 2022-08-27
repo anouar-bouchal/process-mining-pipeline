@@ -4,6 +4,12 @@ from pyspark import SparkContext
 from pyspark.sql import SparkSession
 from pyspark.streaming import StreamingContext
 from pyspark.streaming.kafka import KafkaUtils
+import os
+import sys
+
+
+os.environ['PYSPARK_PYTHON'] = sys.executable
+os.environ['PYSPARK_DRIVER_PYTHON'] = sys.executable
 
 
 def handle_rdd(rdd):

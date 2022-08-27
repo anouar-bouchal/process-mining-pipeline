@@ -6,6 +6,7 @@ ENV SPARK_MASTER_WEBUI_PORT 4040
 
 EXPOSE 4040 7077
 
-RUN usr/bin/spark/sbin/start-master.sh
+#RUN usr/bin/spark/sbin/start-master.sh
 
-ENTRYPOINT [ "tail", "-f", "/dev/null" ]
+#ENTRYPOINT [ "tail", "-f", "/dev/null" ]
+ENTRYPOINT ["bin/bash", "-c", "usr/bin/spark/sbin/start-master.sh && tail -f /dev/null"] 
