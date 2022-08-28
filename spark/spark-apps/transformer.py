@@ -13,27 +13,28 @@ os.environ['PYSPARK_DRIVER_PYTHON'] = sys.executable
 
 
 def handle_rdd(rdd):
-    if not rdd.isEmpty():
-        global spark_session
-        df = None
-        try:
-            df = spark_session.createDataFrame(
-                rdd, schema=["index", "case_id", "task", "event_type", "user", "timestamp"]
-            )
-        except Exception as e:
-            raise e
-        print("########################################################")
-        print("########################################################")
-        print("\n")
-        print(df)
-        print("\n")
-        print("########################################################")
-        print("########################################################")
+    if rdd.isEmpty():
+        return    
+    global spark_session
+    df = None
+    try:
+        df = spark_session.createDataFrame(
+            rdd, schema=["index", "case_id", "task", "event_type", "user", "timestamp"]
+        )
+    except Exception as e:
+        raise e
+    print("########################################################")
+    print("########################################################")
+    print("\n")
+    print(df)
+    print("\n")
+    print("########################################################")
+    print("########################################################")
 
 
 spark_context = SparkContext(appName="discovery")
 
-spark_streaming_context = StreamingContext(spark_context, 5)
+spark_streaming_context = StreamingContext(spark_context, batchDuration=5)
 
 spark_session = (
     SparkSession.builder.appName("event logs")
