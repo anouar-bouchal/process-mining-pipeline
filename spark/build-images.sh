@@ -1,8 +1,10 @@
 #!/bin/bash
+
+
 if [ $# -ge 2 ]
-  then
-    SPARK_VERSION=$1
-    HADOOP_VERSION=$2
+then
+    SPARK_VERSION=$1 #2..7
+    HADOOP_VERSION=$2 #2.4.7
     PWD=$(pwd)
     echo '# Building spark-base'
     docker build -t spark-base $PWD/images/spark-base/ --build-arg SPARK_VERSION=$SPARK_VERSION --build-arg HADOOP_VERSION=$HADOOP_VERSION
@@ -12,7 +14,7 @@ if [ $# -ge 2 ]
     docker build -t spark-worker $PWD/images/spark-worker/
     echo '\n# Building spark-submit'
     docker build -t spark-submit $PWD/images/spark-submit/
-  else
+else
     echo "No arguments supplied\n"
     echo "Use the script as follows:"
     echo "build-images.sh <SPARK_VERSION> <HADOOP_VERSION>"
