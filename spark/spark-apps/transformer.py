@@ -26,6 +26,11 @@ def log_records(dataframe, file_name):
         dataframe.to_csv(path)
 
 
+def write_to_hive(sdf):
+    sdf.write.format("orc") \
+    .mode("overwrite") \
+    .saveAsTable("event_logs")
+
 def handle_rdd(rdd):
     if rdd.isEmpty():
         return
@@ -50,6 +55,8 @@ def handle_rdd(rdd):
     print("\n")
     print("########################       #########################")
     print("########################################################")
+
+
 
 
 # _StreamingContext_ the main entry point for utilizing the Spark Streaming functionality
