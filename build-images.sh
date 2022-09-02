@@ -1,21 +1,19 @@
 echo '\n==========================================================='
-echo '\n# Building Spark Images'
+echo -e '\e[34m\n\t # Building Spark Images\e[0m'
 echo '\n==========================================================='
 
-docker build -t spark-base ./apache-spark-docker/images/spark-base/ --build-arg SPARK_VERSION=2.4.7 --build-arg HADOOP_VERSION=2.7
-echo '\n# Building spark-master'
-docker build -t spark-master ./apache-spark-docker/images/spark-master/
-echo '\n# Building spark-worker'
-docker build -t spark-worker ./apache-spark-docker/images/spark-worker/
-echo '\n# Building spark-submit'
-docker build -t spark-submit ./apache-spark-docker/images/spark-submit/
+docker build -t spark-base ./spark/images/spark-base/
+echo -e '\e[32m\n# Building spark-master\e[0m'
+docker build -t spark-master ./spark/images/spark-master/
+echo -e '\e[32m\n# Building spark-worker\e[0m'
+docker build -t spark-worker ./spark/images/spark-worker/
 
 echo '\n==========================================================='
-echo '\n# Building Kafka Images'
+echo -e '\e[34m\n\t # Building Kafka Images\e[0m'
 echo '\n==========================================================='
 
-docker build -t kafka-base ./apache-kafka-docker/kafka-base/
-echo '\n# Building kafka-server'
-docker build -t kafak-server ./apache-kafka-docker/kafka-server/
-echo '\n# Building kafka-zookeeper'
-docker build -t kafka-zookeeper ./apache-kafka-docker/kafka-zookeeper/
+docker build -t kafka-base ./kafka/kafka-base/
+echo -e '\e[32m\n# Building kafka-server\e[0m'
+docker build -t kafak-server ./kafka/kafka-server/
+echo -e '\e[32m\n# Building kafka-zookeeper\e[0m'
+docker build -t kafka-zookeeper ./kafka/kafka-zookeeper/
