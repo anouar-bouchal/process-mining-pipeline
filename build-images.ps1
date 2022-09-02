@@ -14,7 +14,7 @@ Write-Host "`n===========================================================" -Fore
 
 docker build -t kafka-base ./kafka/kafka-base/
 Write-Host "`n# Building kafka-server" -ForegroundColor 2
-docker build -t kafak-server ./kafka/kafka-server/
+docker build -t kafka-server ./kafka/kafka-server/
 Write-Host "`n# Building kafka-zookeeper" -ForegroundColor 2
 docker build -t kafka-zookeeper ./kafka/kafka-zookeeper/
 
