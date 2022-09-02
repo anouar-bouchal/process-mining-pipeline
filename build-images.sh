@@ -17,3 +17,13 @@ echo -e '\e[32m\n# Building kafka-server\e[0m'
 docker build -t kafak-server ./kafka/kafka-server/
 echo -e '\e[32m\n# Building kafka-zookeeper\e[0m'
 docker build -t kafka-zookeeper ./kafka/kafka-zookeeper/
+
+echo '\n==========================================================='
+echo -e '\e[34m\n\t # Building Consumer Image\e[0m'
+echo '\n==========================================================='
+docker build -t consumer ./consumer
+
+echo '\n==========================================================='
+echo -e '\e[34m\n\t # Building Producer Image\e[0m'
+echo '\n==========================================================='
+docker build -t producer ./producer

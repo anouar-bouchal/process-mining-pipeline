@@ -17,3 +17,13 @@ Write-Host "`n# Building kafka-server" -ForegroundColor 2
 docker build -t kafak-server ./kafka/kafka-server/
 Write-Host "`n# Building kafka-zookeeper" -ForegroundColor 2
 docker build -t kafka-zookeeper ./kafka/kafka-zookeeper/
+
+Write-Host "`n===========================================================" -ForegroundColor 8
+Write-Host "`n`t # Building Consumer Image" -ForegroundColor 1
+Write-Host "`n===========================================================" -ForegroundColor 8
+docker build -t consumer ./consumer
+
+Write-Host "`n===========================================================" -ForegroundColor 8
+Write-Host "`n`t # Building Producer Image" -ForegroundColor 1
+Write-Host "`n===========================================================" -ForegroundColor 8
+docker build -t producer ./producer

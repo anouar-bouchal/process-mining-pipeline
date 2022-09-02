@@ -29,3 +29,21 @@ docker build -t kafka-server ./kafka/kafka-server/
 echo    ## Building kafka-zookeeper
 echo:
 docker build -t kafka-zookeeper ./kafka/kafka-zookeeper/
+
+echo:
+echo    ===========================================================
+echo:
+echo               # Building Consumer Imag
+echo:
+echo    ===========================================================
+echo:
+docker build -t consumer ./consumer
+
+echo:
+echo    ===========================================================
+echo:
+echo               # Building Producer Image
+echo:
+echo    ===========================================================
+echo:
+docker build -t producer ./producer
