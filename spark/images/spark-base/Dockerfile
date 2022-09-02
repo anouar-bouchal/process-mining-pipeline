@@ -10,7 +10,7 @@ RUN apt-get install -y libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm
 
 RUN mkdir /usr/bin/spark/
 
-RUN curl https://archive.apache.org/dist/spark/spark-2.4.7/spark-2.4.7-bin-hadoop2.7.tgz -o spark.tgz
+RUN curl https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz -o spark.tgz
 RUN tar -xf spark.tgz
 RUN mv spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}/* /usr/bin/spark/
 RUN rm -rf spark.tgz
