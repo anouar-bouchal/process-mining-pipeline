@@ -1,10 +1,12 @@
 FROM spark-base
 
-RUN curl https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz -o Python.tgz
+RUN apt install libffi-dev
+
+RUN curl https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tgz -o Python.tgz
 RUN tar xzf Python.tgz 
-RUN cd Python-3.8.0 && ./configure && make altinstall
+RUN cd Python-3.7.0 && ./configure && make altinstall
 RUN rm -rf Python.tgz
-RUN mv /usr/local/bin/python3.8 /usr/local/bin/python3
+RUN mv /usr/local/bin/python3.7 /usr/local/bin/python3
 RUN python3 -m pip install --upgrade pip
 RUN python3 -m pip install --upgrade setuptools
 

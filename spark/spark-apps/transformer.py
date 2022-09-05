@@ -3,7 +3,8 @@
 from pyspark import SparkContext
 from pyspark.sql import SparkSession
 from pyspark.streaming import StreamingContext
-from pyspark.streaming.kafka import KafkaUtils
+from pyspark.sql.types import *
+# from pyspark.sql.SparkSession import readStream
 from pm4py.streaming.stream.live_event_stream import LiveEventStream
 from pm4py.streaming.algo.discovery.dfg import algorithm as dfg_discovery
 import os
@@ -18,7 +19,7 @@ os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
 live_event_stream = LiveEventStream()
 streaming_dfg = dfg_discovery.apply()
 live_event_stream.register(streaming_dfg)
-live_event_stream.start()
+# live_event_stream.start()
 
 
 def handle_rdd(rdd):
@@ -60,6 +61,15 @@ def handle_rdd(rdd):
 # *org.apache.spark.SparkConf configuration
 # *org.apache.spark.SparkContext
 spark_context = SparkContext(appName="discovery")
+# To avoid unncessary logs
+spark_context.setLogLevel("WARN")
+# log4jLogger = spark_context._jvm.org.apache.log4j
+# LOGGER = log4jLogger.LogManager.getLogger()
+
+# # same call as you'd make in java, just using the py4j methods to do so
+# LOGGER.setLevel(log4jLogger.Level.WARN)
+
+
 spark_streaming_context = StreamingContext(spark_context, 10)
 
 spark_session = (
@@ -72,23 +82,47 @@ spark_session = (
 
 # Create an input stream that pulls messages from the Kafka broker
 # (every message from Kafka participates in the conversion only once)
-kafka_stream = KafkaUtils.createDirectStream(
-    spark_streaming_context,
-    ["event-logs-stream"],  # Topic
-    {"metadata.broker.list": "kafka-server:9092"},  # Storage level
-)
+# kafka_stream = KafkaUtils.createDirectStream(
+#     spark_streaming_context,
+#     ["event-logs-stream"],  # Topic
+# kafka.bootstrap.servers
+#     {"metadata.broker.list": "kafka-server:9092"},  # Storage level
+# )
 
-print(kafka_stream)
+# schema = StructType([StructField('id', StringType(), True),
+#                     StructField('id1', StringType(), True),
+#                     StructField('id2', StringType(), True),
+#                     StructField('event', StringType(), True),
+#                     StructField('event_type', StringType(), True),
+#                     StructField('ressource', StringType(), True),
+#                     StructField('arrived_at', StringType(), True),
+#                     StructField('activity', StringType(), True),
+#                     StructField('activity_state', StringType(), True),])
 
-lines = kafka_stream.map(lambda x: x[1])
+df = spark_session \
+  .readStream \
+  .format("kafka") \
+  .option("kafka.bootstrap.servers", "kafka-server:9092") \
+  .option("subscribe", "event-logs-stream") \
+  .load()
 
-transform = lines.map(lambda data: (data.split(";")))
+print(" ################################################# ")
+print(" ################################################# ")
+print(df.printSchema())
+print(" ################################################# ")
+print(" ################################################# ")
 
-print(transform)
 
-transform.foreachRDD(handle_rdd)
+
+# lines = kafka_stream.map(lambda x: x[1])
+
+# transform = lines.map(lambda data: (data.split(";")))
+
+# print(transform)
+
+# transform.foreachRDD(handle_rdd)
 
 # Start the streaming computation
-spark_streaming_context.start()
+# spark_streaming_context.start()
 # allow the current thread to wait for the termination of the context by stop() or by an exception.
-spark_streaming_context.awaitTermination()
+# spark_streaming_context.awaitTermination()
