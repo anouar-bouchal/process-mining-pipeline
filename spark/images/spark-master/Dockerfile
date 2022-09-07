@@ -14,10 +14,15 @@ RUN python3 -m pip install pm4py
 RUN python3 -m pip install kafka-python
 RUN python3 -m pip install pyspark
 
+WORKDIR /
+ADD spark/spark-apps ./spark-apps
+
 ENV PYSPARK_PYTHON=python3
 ENV SPARK_MASTER_PORT 7077
 ENV SPARK_MASTER_WEBUI_PORT 4040
 
 EXPOSE 4040 7077
+RUN usr/bin/spark/sbin/start-master.sh
 
-ENTRYPOINT ["bin/bash", "-c", "usr/bin/spark/sbin/start-master.sh && tail -f /dev/null"] 
+# ENTRYPOINT [ "bin/bash", "-c", "tail -f /dev/null" ]
+ENTRYPOINT [ "bin/bash", "-c", "usr/bin/spark/bin/spark-submit --jars spark-apps/spark-streaming-kafka-0-8-assembly_2.11-2.1.0.jar spark-apps/stream/persist_stream.py" ]
