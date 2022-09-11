@@ -9,7 +9,7 @@ class Discoverer:
         self.algorithm = algotithm
 
     def discover(self):
-        if slef.algorithm:
+        if self.algorithm:
             return self.algorithm(self.log)
         else:
             return heuristic_miner(self.log)
@@ -37,7 +37,7 @@ if __name__ == "__main__":
         .getOrCreate()
     )
     log = spark_session.sql("SELECT * FROM event_logs")
-    log.toPandas()
+    log = log.toPandas()
     log.columns = [
         "case:concept:name",
         "case:task:de",
@@ -49,8 +49,8 @@ if __name__ == "__main__":
         "concept:name",
     ]
 
-    alpha_model = Discoverer(log, alpha_miner)
-    inductive_model = Discoverer(log, inductive_miner)
-    heuristic_model = Discoverer(log, heuristic_miner)
+    alpha_model = Discoverer(log, alpha_miner).discover()
+    inductive_model = Discoverer(log, inductive_miner).discover()
+    heuristic_model = Discoverer(log, heuristic_miner).discover()
 
     print(alpha_model, inductive_model, heuristic_model)
