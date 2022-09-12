@@ -48,8 +48,13 @@ def filter_end_activities(log, **kwargs):
     return pm4py.filter_end_activities(log, kwargs["end_activities"])
 
 
+def filter_case_size(log, **kwargs):
+    _check_required_args('min_events', 'max_events', kwargs)
+    return filter_case_size(log, kwargs['min_events'], kwargs['max_events'])
+
+
 def _check_required_args(*args, **kwargs):
-    if not args in kwargs.keys():
+    if not set(args) <= set(kwargs.keys()):
         raise ValueError("must provide all required arguments : ", args)
 
 
