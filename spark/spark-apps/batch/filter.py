@@ -49,8 +49,8 @@ def filter_end_activities(log, **kwargs):
 
 
 def filter_case_size(log, **kwargs):
-    _check_required_args('min_events', 'max_events', kwargs)
-    return filter_case_size(log, kwargs['min_events'], kwargs['max_events'])
+    _check_required_args("min_events", "max_events", kwargs)
+    return filter_case_size(log, kwargs["min_events"], kwargs["max_events"])
 
 
 def _check_required_args(*args, **kwargs):
