@@ -23,7 +23,7 @@ class Filter:
         if self.filter_type:
             return self.filter_type(self.log, **kwargs)
         else:
-            return get_most_recent(log)
+            return get_most_recent(self.log)
 
 
 def get_most_recent(log):
@@ -31,34 +31,34 @@ def get_most_recent(log):
 
 
 def filter_time_range(log, **kwargs):
-    _check_required_args("start_timestamp", "end_timestamp", kwargs)
+    _check_required_args("start_timestamp", "end_timestamp", **kwargs)
     mode = "events"
     if "mode" in kwargs.keys():
         mode = kwargs["mode"]
     return pm4py.filter_time_range(
-        log, kwargs["start_timestamp"], kwargs[" end_timestamp"], mode=mode
+        log, kwargs["start_timestamp"], kwargs["end_timestamp"], mode=mode
     )
 
 
 def filter_case_performance(log, **kwargs):
-    _check_required_args("min_duration", "max_duration", kwargs)
+    _check_required_args("min_duration", "max_duration", **kwargs)
     return pm4py.filter_case_performance(
         log, kwargs["min_duration"], kwargs["max_duration"]
     )
 
 
 def filter_start_activities(log, **kwargs):
-    _check_required_args("start_activities", kwargs)
+    _check_required_args("start_activities", **kwargs)
     return pm4py.filter_start_activities(log, kwargs["start_activities"])
 
 
 def filter_end_activities(log, **kwargs):
-    _check_required_args("end_activities", kwargs)
+    _check_required_args("end_activities", **kwargs)
     return pm4py.filter_end_activities(log, kwargs["end_activities"])
 
 
 def filter_case_size(log, **kwargs):
-    _check_required_args("min_events", "max_events", kwargs)
+    _check_required_args("min_events", "max_events", **kwargs)
     return filter_case_size(log, kwargs["min_events"], kwargs["max_events"])
 
 
@@ -77,6 +77,6 @@ if __name__ == "__main__":
     )
 
     filtered_log = Filter(logs, filter_type=filter_time_range).apply_filter(
-        "2009-10-13 00:00:00", "2012-01-18 23:59:59"
+        start_timestamp="2009-10-13 00:00:00", end_timestamp="2012-01-18 23:59:59"
     )
     print(filtered_log)
