@@ -2,7 +2,7 @@ from pyspark.sql import SparkSession
 
 
 class EventRepository:
-    def __init__(self, table):
+    def __init__(self, table='event_logs'):
         self.table = table
         self.session = (
             SparkSession.builder.appName("event logs")
@@ -43,5 +43,5 @@ class EventRepository:
 
 # FIX: decide on models storage
 class ModelRepository:
-    def __init__(self, table=models):
+    def __init__(self, table='models'):
         self.table = table

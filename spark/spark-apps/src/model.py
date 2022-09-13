@@ -1,3 +1,6 @@
+import copy
+
+
 class Event:
     def __init__(
         self,
@@ -26,21 +29,21 @@ class EventLogs():
         self.df = None
         self.adf = None
 
-    def get_spark_dataframe():
+    def get_spark_dataframe(self):
         return self.sdf
 
-    def get_dataframe():
+    def get_dataframe(self):
         if not self.df:
-            return sdf.toPandas()
+            return self.sdf.toPandas()
         return self.df
 
-    def get_adapted_dataframe():
+    def get_adapted_dataframe(self):
         if not self.adf:
             self.adf = self._adapt_columns()
         return self.adf
 
     def _adapt_columns(self):
-        df = copy(self.get_dataframe())
+        df = copy.copy(self.get_dataframe())
         df.columns = [
                 "case:concept:name",
                 "case:task:de",
