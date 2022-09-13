@@ -14,13 +14,13 @@ live_event_stream.start()
 
 
 def handle_rdd(rdd):
-    if rdd.isEmpty():
-        return
     global spark_session
     global live_event_stream
     global streaming_dfg
     df = None
     sdf = None
+    if rdd.isEmpty():
+        return
     try:
         sdf = spark_session.createDataFrame(
             rdd,
@@ -37,15 +37,11 @@ def handle_rdd(rdd):
         )
     except Exception as e:
         raise e
+    
     df = sdf.toPandas()
-    print("\n")
     for event in df.to_dict(orient="records"):
         live_event_stream.append(event)
-        # print("############################ Event ###########################")
-        # print(event)
-        # event_values = ",".join(["'" + str(i) + "'"  for i in event.values()])
-        # spark_session.sql(f"INSERT INTO event_logs VALUES ({event_values})")
-        # print(event_values)
+    
     print("######################### Activities #########################")
     print(streaming_dfg.get())
     print("##############################################################")
