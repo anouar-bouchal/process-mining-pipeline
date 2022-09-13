@@ -1,7 +1,7 @@
 from pyspark.sql import SparkSession
 
 
-class EventRepository():
+class EventRepository:
     def __init__(self, table):
         self.table = table
         self.session = (
@@ -11,10 +11,16 @@ class EventRepository():
             .enableHiveSupport()
             .getOrCreate()
         )
-    
+
     def add_event(self, event):
         try:
-            query = "INSERT INTO " + self.table + " VALUES (" + event.flatten_attributes() + ")"
+            query = (
+                "INSERT INTO "
+                + self.table
+                + " VALUES ("
+                + event.flatten_attributes()
+                + ")"
+            )
             self.session.sql(query)
         except Exception as e:
             raise e
@@ -25,7 +31,7 @@ class EventRepository():
             return self.session.sql(query)
         except Exception as e:
             raise e
-    
+
     def get_latest_events(self, number_of_events=5):
         try:
             # FIX: Figure out query
@@ -36,6 +42,6 @@ class EventRepository():
 
 
 # FIX: decide on models storage
-class ModelRepository():
+class ModelRepository:
     def __init__(self, table=models):
         self.table = table

@@ -1,3 +1,12 @@
+import os
+import sys
+PROJECT_ROOT = os.path.abspath(os.path.join(
+                  os.path.dirname(__file__), 
+                  os.pardir)
+)
+sys.path.append(PROJECT_ROOT)
+
+from src import EventLogs, EventRepository
 import pm4py
 from pyspark.sql import SparkSession
 
@@ -29,28 +38,12 @@ def heuristic_miner(log):
 
 if __name__ == "__main__":
 
-    spark_session = (
-        SparkSession.builder.appName("event logs")
-        .config("spark.sql.warehouse.dir", "/user/hive/warehouse")
-        .config("hive.metastore.uris", "thrift://hive-metastore:9083")
-        .enableHiveSupport()
-        .getOrCreate()
-    )
-    log = spark_session.sql("SELECT * FROM event_logs")
-    log = log.toPandas()
-    log.columns = [
-        "case:concept:name",
-        "case:task:de",
-        "case:event:type",
-        "case:user",
-        "time:timestamp",
-        "case:task:type",
-        "case:task:name",
-        "concept:name",
-    ]
+    event_repository = EventRepository()
+    event_logs = EventLogs(event_repository.get_all_events())
+    logs = event_logs.get_adapted_dataframe()
 
-    alpha_model = Discoverer(log, alpha_miner).discover()
-    inductive_model = Discoverer(log, inductive_miner).discover()
-    heuristic_model = Discoverer(log, heuristic_miner).discover()
+    alpha_model = Discoverer(logs, alpha_miner).discover()
+    inductive_model = Discoverer(logs, inductive_miner).discover()
+    heuristic_model = Discoverer(logs, heuristic_miner).discover()
 
     print(alpha_model, inductive_model, heuristic_model)
