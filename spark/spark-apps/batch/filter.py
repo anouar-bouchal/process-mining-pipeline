@@ -71,11 +71,12 @@ if __name__ == "__main__":
 
     event_repository = EventRepository()
     event_logs = EventLogs(event_repository.get_all_events())
-
-    event_logs["time:timestamp"] = event_logs["time:timestamp"].apply(
+    logs = event_logs.get_adapted_dataframe()
+    logs["time:timestamp"] = logs["time:timestamp"].apply(
         lambda t: t.replace(tzinfo=pytz.utc)
     )
-    filtered_log = Filter(event_logs, filter_type=filter_time_range).apply_filter(
+
+    filtered_log = Filter(logs, filter_type=filter_time_range).apply_filter(
         "2009-10-13 00:00:00", "2012-01-18 23:59:59"
     )
     print(filtered_log)
